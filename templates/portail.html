@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ eleve.nom_complet }} - Portail Parents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="entete">
+        <h1>{{ ecole.nom if ecole else "Portail Parents" }}</h1>
+    </div>
+    <div class="conteneur">
+        <div class="carte">
+            <div class="eleve-nom">{{ eleve.nom_complet }}</div>
+            <div class="eleve-info">{{ eleve.classe_nom }} — Matricule {{ eleve.matricule }}</div>
+        </div>
+
+        <div class="carte">
+            <h3>📊 Résultats</h3>
+            {% if resultats %}
+            <table class="mini">
+                <thead><tr><th>Période</th><th>Moyenne</th><th>Rang</th></tr></thead>
+                <tbody>
+                    {% for r in resultats %}
+                    <tr>
+                        <td>{{ r.periode_nom }}</td>
+                        <td>
+                            {% if r.moyenne_generale %}
+                            <span class="{{ 'badge-ok' if r.moyenne_generale >= 10 else 'badge-danger' }}">{{ "%.2f"|format(r.moyenne_generale) }}/20</span>
+                            {% else %}-{% endif %}
+                        </td>
+                        <td>{{ r.rang or "-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="hint">Aucun résultat disponible pour le moment.</p>
+            {% endif %}
+        </div>
+
+        {% for periode, notes in notes_par_periode.items() %}
+        <div class="carte">
+            <h3>📝 Notes — {{ periode }}</h3>
+            <table class="mini">
+                <thead><tr><th>Matière</th><th>Éval.</th><th>Compo.</th><th>Moy.</th></tr></thead>
+                <tbody>
+                    {% for n in notes %}
+                    <tr>
+                        <td>{{ n.matiere_nom }}</td>
+                        <td>{{ n.moyenne_evaluations if n.moyenne_evaluations is not none else "-" }}</td>
+                        <td>{{ n.composition if n.composition is not none else "-" }}</td>
+                        <td><strong>{{ n.moyenne_matiere if n.moyenne_matiere is not none else "-" }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+
+        <div class="carte">
+            <h3>💰 Paiements</h3>
+            {% if paiements %}
+            <table class="mini">
+                <thead><tr><th>Type</th><th>Payé</th><th>Reste</th></tr></thead>
+                <tbody>
+                    {% for p in paiements %}
+                    <tr>
+                        <td>{{ p.type_frais_nom }}</td>
+                        <td>{{ "{:,.0f}".format(p.montant_paye).replace(",", " ") }}</td>
+                        <td class="{{ 'badge-ok' if p.reste <= 0 else 'badge-warn' }}">
+                            {{ "{:,.0f}".format(p.reste).replace(",", " ") }} GNF
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="hint">Aucune information de paiement disponible.</p>
+            {% endif %}
+        </div>
+
+        <div class="carte">
+            <h3>📅 Présences</h3>
+            {% if presences %}
+            <table class="mini">
+                <thead><tr><th>Mois</th><th>Absences</th><th>Retards</th><th>Malade</th></tr></thead>
+                <tbody>
+                    {% for p in presences %}
+                    <tr>
+                        <td>{{ p.mois_libelle }}</td>
+                        <td class="{{ 'badge-danger' if p.nb_absences > 0 else '' }}">{{ p.nb_absences }}</td>
+                        <td>{{ p.nb_retards }}</td>
+                        <td>{{ p.nb_malades }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="hint">Aucune donnée de présence disponible.</p>
+            {% endif %}
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="deconnexion">Se déconnecter</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+:root {
+    --primary: #1e5f74;
+    --primary-dark: #164654;
+    --accent: #f2a541;
+    --bg: #f5f7f8;
+    --text: #23343a;
+    --border: #dde3e5;
+    --success: #2e7d32;
+    --danger: #c62828;
+    --warning: #b8860b;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0; font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+}
+.conteneur { max-width: 480px; margin: 0 auto; padding: 1.2rem; }
+
+.entete {
+    background: var(--primary-dark); color: white;
+    padding: 1.2rem; text-align: center;
+}
+.entete h1 { margin: 0; font-size: 1.2rem; }
+.entete span { color: var(--accent); }
+
+.login-box {
+    background: white; border-radius: 12px; padding: 2rem 1.5rem;
+    margin-top: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.login-box h2 { text-align: center; color: var(--primary-dark); margin-top: 0; }
+.login-box input {
+    width: 100%; padding: 0.9rem; font-size: 1.3rem; text-align: center;
+    letter-spacing: 0.2em; text-transform: uppercase; font-family: monospace;
+    border: 2px solid var(--border); border-radius: 8px; margin: 1rem 0;
+}
+.login-box button {
+    width: 100%; padding: 0.9rem; background: var(--primary); color: white;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
+}
+
+.flash { padding: 0.7rem 1rem; border-radius: 6px; margin-bottom: 0.8rem; font-size: 0.9rem; }
+.flash-danger { background: #fdecea; color: var(--danger); }
+.flash-success { background: #e6f4ea; color: var(--success); }
+
+.carte { background: white; border-radius: 10px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.carte h3 { margin: 0 0 0.7rem; color: var(--primary-dark); font-size: 1rem; }
+
+.eleve-nom { font-size: 1.1rem; font-weight: 700; }
+.eleve-info { color: #667; font-size: 0.85rem; margin-top: 0.2rem; }
+
+table.mini { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+table.mini th, table.mini td { padding: 0.5rem 0.3rem; text-align: left; border-bottom: 1px solid var(--border); }
+table.mini th { color: #667; font-weight: 600; }
+
+.badge-ok { color: var(--success); font-weight: 700; }
+.badge-warn { color: var(--warning); font-weight: 700; }
+.badge-danger { color: var(--danger); font-weight: 700; }
+
+.deconnexion { display: block; text-align: center; margin-top: 1rem; color: #999; font-size: 0.85rem; text-decoration: none; }
+.hint { color: #999; font-size: 0.85rem; }
